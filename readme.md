@@ -178,9 +178,9 @@ INSERT INTO SOPORTE_TECNICO VALUES
 ---
  
 ### Imagenes del problema
-![Diagrama Entidad Relacion]()
+()
 
 ### Imagenes del negocio 
-![Modelo Relacional](https://github.com/DanielBarbaran/Proyecto2LBNetwork/blob/main/img/image.png)
+(https://github.com/DanielBarbaran/Proyecto2LBNetwork/blob/main/img/image.png)
 
 ---
