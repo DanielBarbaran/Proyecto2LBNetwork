@@ -1,9 +1,3 @@
-## TRELLO
-Más info en [mi tablero de trello](https://trello.com/b/ZQ6N2ybV/lbnetwork)
-![TRELLO](https://github.com/DanielBarbaran/LBNETWORK/blob/main/frontend/Captura12.PNG)
-
----
-
 # Sistema de Gestión de Servicios de Internet – LBNETWORK
 
 Sistema web para la administración de clientes, planes de internet, pagos y soporte técnico. Desarrollado como proyecto del curso de Java Web en SENATI.
@@ -63,48 +57,6 @@ Desarrollar un sistema web con Java Spring Boot y MySQL que permita administrar 
 | RNF05 | Respaldo | Copias de seguridad de la base de datos |
 | RNF06 | Usabilidad | Interfaz fácil de usar |
 | RNF07 | Disponibilidad | Sistema disponible para consultas administrativas |
-
----
-
-## Stack completo
-
-1. Trello → Gestión del proyecto (Kanban)  
-2. Draw.io → Diagramas (ER y clases)  
-3. Figma → Diseño UI/UX  
-4. MySQL Workbench → Base de datos  
-5. IntelliJ → Backend (Spring Boot)  
-6. VS Code → Frontend (HTML, CSS, JS)  
-7. XAMPP → Servidor local  
-
----
-
-## Tecnologías utilizadas
-
-- Java 17  
-- Spring Boot  
-- MySQL  
-- HTML5, CSS3, JavaScript  
-- IntelliJ IDEA  
-- XAMPP  
-- MySQL Workbench  
-- Figma  
-- Draw.io  
-
----
-
-## Estructura del proyecto
-
-```
-Sistema-LBNETWORK/
-├── backend/          → Spring Boot (Java)
-│   ├── src/
-│   ├── pom.xml
-│   └── ...
-├── frontend/         → HTML, CSS, JS
-│   ├── css/
-│   ├── js/
-│   └── index.html
-```
 
 ---
 
@@ -225,70 +177,3 @@ INSERT INTO SOPORTE_TECNICO VALUES
 
 ---
 
-## Cómo correr el proyecto
-
-### Requisitos previos
-
-- IntelliJ IDEA  
-- XAMPP  
-- MySQL Workbench  
-- JDK 17 o superior  
-
----
-
-### Backend
-
-1. Abrir carpeta `backend/` en IntelliJ  
-2. Configurar conexión a MySQL  
-3. Ejecutar el proyecto Spring Boot  
-4. Servidor en: `http://localhost:8080`  
-
----
-
-### Frontend
-
-1. Abrir carpeta `frontend/` en VS Code  
-2. Ejecutar con Live Server  
-3. Conectar con backend mediante `fetch()`  
-
----
-
-## Resultado esperado
-
-- Gestión eficiente de clientes  
-- Control de servicios instalados  
-- Registro de pagos  
-- Seguimiento de soporte técnico  
-- Generación de reportes  
-
----
-
-## Configuración de la base de datos
-
-Este proyecto utiliza Spring Boot con conexión a MySQL.
-
-Asegúrate de tener creada la base de datos:
-
-```sql
-CREATE DATABASE sistema_servicios;
-```
-
-Luego configura el archivo `application.properties` con los siguientes datos:
-
-```properties
-spring.application.name=LBNETWORK
-
-# CONEXION A MYSQL
-spring.datasource.url=jdbc:mysql://localhost:3306/sistema_servicios
-spring.datasource.username=root
-spring.datasource.password=
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-
-# JPA / HIBERNATE
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
-
-# PUERTO DEL SERVIDOR
-server.port=8080
-```
