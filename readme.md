@@ -178,9 +178,9 @@ INSERT INTO SOPORTE_TECNICO VALUES
 ---
  
 ### Imagenes del problema
-()
+![imagenes del problema]()
 
 ### Imagenes del negocio 
-(https://github.com/DanielBarbaran/Proyecto2LBNetwork/blob/main/img/image.png)
+![imagenes del negocio](https://github.com/DanielBarbaran/Proyecto2LBNetwork/blob/main/img/image.png)
 
 ---
