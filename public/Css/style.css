@@ -1,0 +1,16 @@
+.contenedor-cards{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+.card{
+    width: 300px;
+    background: rgba(15, 187, 178, 0.603);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(12, 199, 199, 0.301);
+    text-align: center;
+}
