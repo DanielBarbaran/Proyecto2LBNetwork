@@ -89,9 +89,9 @@ El sistema cuenta con 5 tablas principales:
 CREATE DATABASE sistema_servicios;
 USE sistema_servicios;
 
--- Tabla CLIENTE
+-- CLIENTE
 CREATE TABLE CLIENTE (
-    id_cliente INT PRIMARY KEY,
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50),
     apellido VARCHAR(50),
     ruc VARCHAR(20),
@@ -99,81 +99,99 @@ CREATE TABLE CLIENTE (
     direccion TEXT
 );
 
--- Tabla PLAN
+-- PLAN
 CREATE TABLE PLAN (
-    id_plan INT PRIMARY KEY,
+    id_plan INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50),
     velocidad VARCHAR(20),
     precio DECIMAL(10,2)
 );
 
--- Tabla SERVICIO
+-- SERVICIO
 CREATE TABLE SERVICIO (
-    id_servicio INT PRIMARY KEY,
+    id_servicio INT AUTO_INCREMENT PRIMARY KEY,
     id_cliente INT,
     id_plan INT,
     fecha_instalacion DATE,
-    estado VARCHAR(20)
+    estado VARCHAR(20),
+    FOREIGN KEY (id_cliente) REFERENCES CLIENTE(id_cliente),
+    FOREIGN KEY (id_plan) REFERENCES PLAN(id_plan)
 );
 
--- Tabla PAGO
+-- PAGO
 CREATE TABLE PAGO (
-    id_pago INT PRIMARY KEY,
+    id_pago INT AUTO_INCREMENT PRIMARY KEY,
     id_servicio INT,
     fecha_pago DATE,
-    monto DECIMAL(10,2)
+    monto DECIMAL(10,2),
+    FOREIGN KEY (id_servicio) REFERENCES SERVICIO(id_servicio)
 );
 
--- Tabla SOPORTE_TECNICO
-CREATE TABLE SOPORTE_TECNICO (
-    id_soporte INT PRIMARY KEY,
-    id_servicio INT,
-    fecha_reporte DATETIME,
-    descripcion TEXT,
-    estado VARCHAR(20)
+-- USUARIO
+CREATE TABLE USUARIO (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE,
+    password VARCHAR(255),
+    rol VARCHAR(20)
 );
 
+-- EMPLEADO
+CREATE TABLE EMPLEADO (
+    id_empleado INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT,
+    nombre VARCHAR(50),
+    apellido VARCHAR(50),
+    FOREIGN KEY (id_usuario) REFERENCES USUARIO(id_usuario)
+);
 
-INSERT INTO CLIENTE VALUES
-(1, 'Juan', 'Pérez', '12345678', '900111111', 'Av. Perú 123'),
-(2, 'María', 'Gómez', '87654321', '900222222', 'Jr. Lima 456'),
-(3, 'Carlos', 'López', '11223344', '900333333', 'Calle Arequipa 789'),
-(4, 'Ana', 'Torres', '22334455', '900444444', 'Av. Amazonas 321'),
-(5, 'Luis', 'Ramírez', '33445566', '900555555', 'Jr. Los Olivos 654');
+-- ASISTENCIA
+CREATE TABLE ASISTENCIA (
+    id_asistencia INT AUTO_INCREMENT PRIMARY KEY,
+    id_empleado INT,
+    fecha DATE,
+    hora_entrada TIME,
+    hora_salida TIME,
+    estado VARCHAR(20),
+    FOREIGN KEY (id_empleado) REFERENCES EMPLEADO(id_empleado)
+);
+INSERT INTO usuario (username, password, rol)
+VALUES ('admin', '1234', 'admin');
 
-INSERT INTO PLAN VALUES
-(1, 'Básico', '10 Mbps', 30.00),
-(2, 'Hogar', '30 Mbps', 45.00),
-(3, 'Premium', '100 Mbps', 80.00),
-(4, 'Ultra', '200 Mbps', 120.00);
+INSERT INTO CLIENTE (nombre, apellido, ruc, telefono, direccion) VALUES
+('Juan', 'Pérez', '12345678', '900111111', 'Av. Perú 123'),
+('María', 'Gómez', '87654321', '900222222', 'Jr. Lima 456');
 
-INSERT INTO SERVICIO VALUES
-(1, 1, 2, '2024-01-10', 'activo'),
-(2, 2, 3, '2024-01-12', 'activo'),
-(3, 3, 1, '2024-01-15', 'suspendido'),
-(4, 4, 4, '2024-02-01', 'activo'),
-(5, 5, 3, '2024-02-05', 'activo');
+INSERT INTO PLAN (nombre, velocidad, precio) VALUES
+('Hogar', '30 Mbps', 45.00),
+('Premium', '100 Mbps', 80.00);
 
-INSERT INTO PAGO VALUES
-(1, 1, '2024-02-01', 45.00),
-(2, 2, '2024-02-02', 80.00),
-(3, 3, '2024-02-03', 30.00),
-(4, 4, '2024-03-01', 120.00),
-(5, 5, '2024-03-02', 80.00),
-(6, 6, '2024-04-01', 120.00);
+INSERT INTO SERVICIO (id_cliente, id_plan, fecha_instalacion, estado) VALUES
+(1, 1, '2024-01-10', 'activo'),
+(2, 2, '2024-01-12', 'activo');
+ALTER TABLE EMPLEADO 
+ADD dni VARCHAR(15),
+ADD celular VARCHAR(15),
+ADD cargo VARCHAR(50),
+ADD fecha_registro DATE;
 
-INSERT INTO SOPORTE_TECNICO VALUES
-(1, 1, '2024-02-10 08:30:00', 'Conexión intermitente', 'pendiente'),
-(2, 1, '2024-02-10 12:00:00', 'Conexión intermitente', 'en_proceso'),
-(3, 1, '2024-02-11 09:15:00', 'Conexión intermitente', 'resuelto'),
-(4, 2, '2024-02-12 10:00:00', 'Internet lento', 'pendiente'),
-(5, 2, '2024-02-12 15:30:00', 'Internet lento', 'en_proceso'),
-(6, 2, '2024-02-13 11:00:00', 'Internet lento', 'resuelto'),
-(7, 4, '2024-03-01 11:20:00', 'Router dañado', 'pendiente'),
-(8, 4, '2024-03-01 16:00:00', 'Router dañado', 'en_proceso'),
-(9, 5, '2024-03-03 14:10:00', 'Cortes de señal', 'pendiente'),
-(10, 5, '2024-03-04 09:00:00', 'Cortes de señal', 'resuelto');
-```
+-- Usuario para el empleado
+INSERT INTO USUARIO (username, password, rol)
+VALUES ('empleado1', '1234', 'empleado');
+
+-- Empleado completo
+INSERT INTO EMPLEADO 
+(id_usuario, nombre, apellido, dni, celular, cargo, fecha_registro)
+VALUES 
+(1, 'Carlos', 'Lopez', '12345678', '987654321', 'Vendedor', CURDATE());
+
+-- Otro ejemplo
+INSERT INTO USUARIO (username, password, rol)
+VALUES ('empleado2', '1234', 'empleado');
+
+INSERT INTO EMPLEADO 
+(id_usuario, nombre, apellido, dni, celular, cargo, fecha_registro)
+VALUES 
+(2, 'Ana', 'Torres', '87654321', '912345678', 'Administrador', CURDATE());
 
 ---
  
