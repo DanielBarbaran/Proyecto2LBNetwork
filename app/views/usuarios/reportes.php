@@ -18,10 +18,13 @@
     <nav class="breadcrumb">
         <span>Inicio</span>
         <i class="fa-solid fa-chevron-right"></i>
-        <span id="breadcrumb-page">Dashboard</span>
+        <span">Usuario</span>
+        <i class="fa-solid fa-chevron-right"></i>
+        <span id="breadcrumb-page">Reportes</span>
     </nav>
     <div class="main-content">
         <div class="table-responsive">
+            <H1>ESTO ES USUARIO</H1>
         </div>
     </div>
 </main>

@@ -1,32 +1,19 @@
 <?php
+require_once __DIR__ . '/Router.php';
+// App es el punto de arranque de toda la aplicación.
+// Su único trabajo es preparar el entorno (sesiones) y lanzar el Router.
+// Es lo primero que se ejecuta después de que app/index.php carga la configuración.
 class App {
-    protected $controlador = 'Dashboard';
-    protected $metodo = 'index';
 
-    public function __construct() {
-        $url = $this->getUrl();
+    // Inicia la sesión y arranca el Router.
+    // Se llama una sola vez desde app/index.php.
+    public function run(): void {
+        // Iniciamos las sesiones de PHP aquí para que estén disponibles
+        // en todos los controladores sin tener que llamar session_start() en cada uno.
+        session_start();
 
-        if(isset($url[0]) && file_exists('../app/controllers/' . ucfirst($url[0]) . '.php')){
-            $this->controlador = ucfirst($url[0]);
-            unset($url[0]);
-        }
-
-        require_once '../app/controllers/' . $this->controlador . '.php';
-        $this->controlador = new $this->controlador;
-
-        if(isset($url[1]) && method_exists($this->controlador, $url[1])){
-            $this->metodo = $url[1];
-            unset($url[1]);
-        }
-
-        $params = $url ? array_values($url) : [];
-        call_user_func_array([$this->controlador, $this->metodo], $params);
-    }
-
-    public function getUrl(){
-        if(isset($_GET['url'])){
-            return explode('/', filter_var(rtrim($_GET['url'], '/'), FILTER_SANITIZE_URL));
-        }
-        return [];
+        // Creamos el Router y le decimos que procese la petición actual.
+        $router = new Router();
+        $router->run();
     }
 }
