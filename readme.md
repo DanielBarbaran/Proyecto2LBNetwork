@@ -128,9 +128,9 @@ daniel/
 
 ---
 ### DIAGRAMA DE FIGMA
-Más info en [Mi_Diseño_Figma](https://www.figma.com/design/F0hS7gps6mz5811iBBZVr8/Entregable-01?node-id=1-2&t=1I4VFzDYAzfZAZIh-1)
+Más info en [Mi_Diseño_Figma](https://www.figma.com/design/n0jyJFqX0S9NUUc56IJL1f/Sin-t%C3%ADtulo?node-id=26-1742&t=nF7zlaAGr2diey0k-1)
 ### DIAGRAMA DE FIGMA
-Más info en [Mi_Diseño_Figma](https://www.figma.com/design/F0hS7gps6mz5811iBBZVr8/Entregable-01?node-id=1-2&t=1I4VFzDYAzfZAZIh-1)
+Más info en [Mi_Trello](https://trello.com/invite/b/69e02244fec35ca03f7a0b81/ATTI71803d965a1f4f9c36091e57f467cff8BD5ECBE8/lbnetwork)
 ## Base de datos
 
 El sistema cuenta con las siguientes tablas principales:
