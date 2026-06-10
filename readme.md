@@ -267,3 +267,6 @@ Este proyecto usa un CRUD para administrar la información principal del negocio
 
 ## 6. Imágenes del negocio
 ![Negocio](img/image.png)
+
+## 6. Software en negocio
+![Negocio](img/soft.png)
