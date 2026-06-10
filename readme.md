@@ -1,6 +1,6 @@
 # Sistema de Gestión de Servicios de Internet – LBNETWORK
 
-Sistema web para la administración de clientes, planes de internet, pagos y soporte técnico. Desarrollado como proyecto del curso de Java Web en SENATI.
+Aplicación web para el registro y gestión de ventas de paquetes de internet Wifi, desarrollada en **PHP puro con arquitectura MVC desde cero**, **programación orientada a objetos**, **PDO** y **MariaDB / MySQL** como base de datos.
 
 ---
 
@@ -11,21 +11,19 @@ Sistema web para la administración de clientes, planes de internet, pagos y sop
 **Giro:** Telecomunicaciones – Servicio de Internet  
 **Tamaño:** Pequeña empresa  
 
-**Contexto:**  
 Empresa dedicada a brindar servicio de internet residencial en hogares, ofreciendo diferentes planes según la velocidad. Realiza instalaciones, gestiona pagos mensuales y brinda soporte técnico ante fallas del servicio.
-
-**Justificación:**  
-Se necesita un sistema digital para gestionar clientes, servicios y pagos, evitando registros manuales y mejorando el control de la información.
 
 ---
 
-## Identificación del problema y solución
+## Problemática
 
-**Problema:**  
-La gestión de clientes, pagos y servicios se realiza de forma manual o desorganizada, lo que genera errores, pérdida de información y dificultad para el seguimiento de servicios activos y pagos.
+El registro de ventas para clientes suele realizarse de manera poco organizada, lo que dificulta llevar un control claro de los paquetes vendidos, los clientes atendidos y los códigos entregados. Esta falta de orden puede generar errores en el cobro, duplicidad de registros, pérdida de información y un manejo ineficiente del servicio, especialmente cuando hay alta demanda. Además, al no contar con una herramienta visual e intuitiva, el proceso puede volverse confuso tanto para el personal como para los clientes.
 
-**Solución tecnológica:**  
-Desarrollar un sistema web con Java Spring Boot y MySQL que permita administrar clientes, planes, servicios, pagos y soporte técnico en tiempo real.
+---
+
+## Solución
+
+Desarrollar una plataforma web orientada al registro de la venta de paquetes para clientes, permitiendo un mejor manejo y control de cada transacción realizada. El sistema ofrece una interfaz intuitiva y responsive, facilitando la navegación desde distintos dispositivos y mejorando la experiencia de uso. Con ello, se podrá registrar de forma ordenada cada venta, consultar los paquetes disponibles, administrar clientes y controlar los usuarios que registran la información.
 
 ---
 
@@ -60,145 +58,205 @@ Desarrollar un sistema web con Java Spring Boot y MySQL que permita administrar 
 
 ---
 
+## Alcance
 
-## Base de Datos
+- Login y cierre de sesión
+- Dashboard con resumen general
+- CRUD de paquetes
+- CRUD de clientes
+- CRUD de usuarios
+- Registro de ventas
+- Landing page informativa
+- Tabla de paquetes, duración y precios
 
-El sistema cuenta con 5 tablas principales:
+---
+
+## Stack
+
+| Capa | Tecnología |
+|---|---|
+| Backend | PHP 8+ |
+| Base de datos | MariaDB / MySQL |
+| Frontend | HTML5, CSS3, JavaScript, Bootstrap |
+| Iconos | Font Awesome |
+| Fuente | Poppins |
+| Arquitectura | MVC desde cero |
+
+---
+
+## Arquitectura
+
+El proyecto está organizado bajo el patrón **MVC**:
+
+- `Controllers` procesan las peticiones
+- `Models` se conectan a la base de datos
+- `Views` muestran la interfaz al usuario
+
+La navegación se maneja con sesiones PHP para proteger las rutas privadas del panel administrativo.
+
+---
+
+## Flujo del sistema
+
+1. El usuario ingresa a la landing page o al login
+2. El sistema valida credenciales
+3. Si la sesión es correcta, se redirige al dashboard
+4. Desde el panel se administran paquetes, clientes, usuarios y ventas
+5. Al cerrar sesión, se elimina la sesión y se redirige a la página principal
+
+---
+
+## Estructura del proyecto
+
+```text
+daniel/
+|-- app/
+|   |-- config/
+|   |-- controllers/
+|   |-- core/
+|   |-- models/
+|   |-- views/
+|-- public/
+|   |-- css/
+|   |-- js/
+|   |-- img/
+|   |-- video/
+|-- database.sql
+|-- .env
+|-- README.md
+```
+
+---
+
+## Base de datos
+
+El sistema cuenta con las siguientes tablas principales:
 
 | Tabla | Descripción |
 |---|---|
-| CLIENTE | Información de los clientes |
-| PLAN | Planes de internet |
-| SERVICIO | Servicios contratados |
-| PAGO | Registro de pagos |
-| SOPORTE_TECNICO | Registro de incidencias |
-
----
- 
-### Dagrama Entidad Relacion (DER)
-![Diagrama Entidad Relacion](https://github.com/emiaj0978/LBNETWORK/blob/main/frontend/image%20copy%203.png)
-
-### Modelo Relacional (MR)
-![Modelo Relacional](https://github.com/emiaj0978/LBNETWORK/blob/main/frontend/image%20copy%202.png)
-
----
+| usuario | Cuentas de acceso al sistema |
+| paquete | Planes de internet disponibles |
+| cliente | Información de los clientes |
+| venta | Registro de ventas realizadas |
 
 ### Script de Base de Datos
 
 ```sql
-CREATE DATABASE sistema_servicios;
-USE sistema_servicios;
+CREATE DATABASE daniel_wifi;
+USE daniel_wifi;
 
--- CLIENTE
-CREATE TABLE CLIENTE (
-    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50),
-    apellido VARCHAR(50),
-    ruc VARCHAR(20),
-    telefono VARCHAR(15),
-    direccion TEXT
+CREATE TABLE usuario (
+  id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+  nombre_usuario VARCHAR(120) NOT NULL UNIQUE,
+  clave VARCHAR(255) NOT NULL,
+  roles ENUM('admin','superadmin') DEFAULT 'admin'
 );
 
--- PLAN
-CREATE TABLE PLAN (
-    id_plan INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50),
-    velocidad VARCHAR(20),
-    precio DECIMAL(10,2)
+CREATE TABLE paquete (
+  id_paquete INT AUTO_INCREMENT PRIMARY KEY,
+  nombre_paquete VARCHAR(80) NOT NULL,
+  duracion VARCHAR(80) NOT NULL,
+  precio DECIMAL(10,2) NOT NULL
 );
 
--- SERVICIO
-CREATE TABLE SERVICIO (
-    id_servicio INT AUTO_INCREMENT PRIMARY KEY,
-    id_cliente INT,
-    id_plan INT,
-    fecha_instalacion DATE,
-    estado VARCHAR(20),
-    FOREIGN KEY (id_cliente) REFERENCES CLIENTE(id_cliente),
-    FOREIGN KEY (id_plan) REFERENCES PLAN(id_plan)
+CREATE TABLE cliente (
+  id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(120) NOT NULL,
+  documento VARCHAR(20) NOT NULL UNIQUE,
+  telefono VARCHAR(30) NULL
 );
 
--- PAGO
-CREATE TABLE PAGO (
-    id_pago INT AUTO_INCREMENT PRIMARY KEY,
-    id_servicio INT,
-    fecha_pago DATE,
-    monto DECIMAL(10,2),
-    FOREIGN KEY (id_servicio) REFERENCES SERVICIO(id_servicio)
+CREATE TABLE venta (
+  id_venta INT AUTO_INCREMENT PRIMARY KEY,
+  fecha_venta DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  id_cliente INT NOT NULL,
+  id_paquete INT NOT NULL,
+  usuario_registro INT NOT NULL,
+  codigo_cupon VARCHAR(80) NOT NULL,
+  estado ENUM('vendido','activo','vencido') DEFAULT 'vendido',
+  FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE CASCADE,
+  FOREIGN KEY (id_paquete) REFERENCES paquete(id_paquete) ON DELETE CASCADE,
+  FOREIGN KEY (usuario_registro) REFERENCES usuario(id_usuario) ON DELETE CASCADE
 );
+```
 
--- USUARIO
-CREATE TABLE USUARIO (
-    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) UNIQUE,
-    password VARCHAR(255),
-    rol VARCHAR(20)
-);
+### Datos de prueba
 
--- EMPLEADO
-CREATE TABLE EMPLEADO (
-    id_empleado INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT,
-    nombre VARCHAR(50),
-    apellido VARCHAR(50),
-    FOREIGN KEY (id_usuario) REFERENCES USUARIO(id_usuario)
-);
+```sql
+INSERT INTO usuario (nombre_usuario, clave, roles) VALUES
+('admin', 'admin', 'superadmin');
 
--- ASISTENCIA
-CREATE TABLE ASISTENCIA (
-    id_asistencia INT AUTO_INCREMENT PRIMARY KEY,
-    id_empleado INT,
-    fecha DATE,
-    hora_entrada TIME,
-    hora_salida TIME,
-    estado VARCHAR(20),
-    FOREIGN KEY (id_empleado) REFERENCES EMPLEADO(id_empleado)
-);
-INSERT INTO usuario (username, password, rol)
-VALUES ('admin', '1234', 'admin');
+INSERT INTO paquete (nombre_paquete, duracion, precio) VALUES
+('30Minutos', '30 minutos', 1.00),
+('1Hora', '1 hora', 2.00),
+('2Horas', '2 horas', 4.00),
+('3Dias', '3 dias', 9.00),
+('30Dias', '30 dias', 80.00);
 
-INSERT INTO CLIENTE (nombre, apellido, ruc, telefono, direccion) VALUES
-('Juan', 'Pérez', '12345678', '900111111', 'Av. Perú 123'),
-('María', 'Gómez', '87654321', '900222222', 'Jr. Lima 456');
+INSERT INTO cliente (nombre, documento, telefono) VALUES
+('Juan Perez', '12345678', '987654321'),
+('Maria Torres', '87654321', '912345678'),
+('Carlos Rojas', '45678912', '933221144');
 
-INSERT INTO PLAN (nombre, velocidad, precio) VALUES
-('Hogar', '30 Mbps', 45.00),
-('Premium', '100 Mbps', 80.00);
-
-INSERT INTO SERVICIO (id_cliente, id_plan, fecha_instalacion, estado) VALUES
-(1, 1, '2024-01-10', 'activo'),
-(2, 2, '2024-01-12', 'activo');
-ALTER TABLE EMPLEADO 
-ADD dni VARCHAR(15),
-ADD celular VARCHAR(15),
-ADD cargo VARCHAR(50),
-ADD fecha_registro DATE;
-
--- Usuario para el empleado
-INSERT INTO USUARIO (username, password, rol)
-VALUES ('empleado1', '1234', 'empleado');
-
--- Empleado completo
-INSERT INTO EMPLEADO 
-(id_usuario, nombre, apellido, dni, celular, cargo, fecha_registro)
-VALUES 
-(1, 'Carlos', 'Lopez', '12345678', '987654321', 'Vendedor', CURDATE());
-
--- Otro ejemplo
-INSERT INTO USUARIO (username, password, rol)
-VALUES ('empleado2', '1234', 'empleado');
-
-INSERT INTO EMPLEADO 
-(id_usuario, nombre, apellido, dni, celular, cargo, fecha_registro)
-VALUES 
-(2, 'Ana', 'Torres', '87654321', '912345678', 'Administrador', CURDATE());
+INSERT INTO venta (id_cliente, id_paquete, usuario_registro, codigo_cupon, estado) VALUES
+(1, 1, 1, 'DANIEL123', 'vendido'),
+(2, 2, 1, 'WIFI456', 'activo'),
+(3, 3, 1, 'LB789', 'vencido');
+```
 
 ---
- 
-### Imagenes del problema
-![imagenes del problema]()
 
-### Imagenes del negocio 
-![imagenes del negocio](https://github.com/DanielBarbaran/Proyecto2LBNetwork/blob/main/img/image.png)
+## CRUD del Sistema
+
+Este proyecto usa un CRUD para administrar la información principal del negocio de internet. CRUD significa:
+
+- `C`reate: crear registros nuevos
+- `R`ead: ver o listar registros
+- `U`pdate: editar registros existentes
+- `D`elete: eliminar registros
+
+### Módulos que usan CRUD
+
+**Paquetes** – Permite registrar, ver, editar y eliminar los planes de internet.
+
+**Clientes** – Permite administrar los datos de los clientes que compran los paquetes.
+
+**Usuarios** – Permite gestionar las cuentas que ingresan al sistema.
+
+**Ventas** – Permite registrar cada venta con cliente, paquete, usuario, cupón y estado.
 
 ---
+
+## Instalación
+
+1. Copia `.env.example` a `.env`
+2. Configura `APP_URL` y los datos de base de datos
+3. Crea la base `daniel_wifi`
+4. Ejecuta el archivo `database.sql`
+5. Abre el proyecto desde `http://localhost/daniel`
+
+---
+
+## Credenciales de acceso
+
+- **Usuario:** `admin`
+- **Clave:** `admin`
+
+---
+
+## Rutas principales
+
+| Ruta | Descripción |
+|---|---|
+| `/` | Landing page pública |
+| `/login` | Inicio de sesión |
+| `/dashboard` | Panel principal |
+| `/paquetes/ver` | Listado de paquetes |
+| `/paquetes/registrar` | Registrar nuevo paquete |
+| `/clientes/ver` | Listado de clientes |
+| `/clientes/registrar` | Registrar nuevo cliente |
+| `/usuarios/ver` | Listado de usuarios |
+| `/usuarios/registrar` | Crear nuevo usuario |
+| `/ventas/ver` | Listado de ventas |
+| `/ventas/registrar` | Registrar nueva venta |
+| `/logout` | Cerrar sesión |
