@@ -127,7 +127,10 @@ daniel/
 ```
 
 ---
-
+### DIAGRAMA DE FIGMA
+Más info en [Mi_Diseño_Figma](https://www.figma.com/design/F0hS7gps6mz5811iBBZVr8/Entregable-01?node-id=1-2&t=1I4VFzDYAzfZAZIh-1)
+### DIAGRAMA DE FIGMA
+Más info en [Mi_Diseño_Figma](https://www.figma.com/design/F0hS7gps6mz5811iBBZVr8/Entregable-01?node-id=1-2&t=1I4VFzDYAzfZAZIh-1)
 ## Base de datos
 
 El sistema cuenta con las siguientes tablas principales:
@@ -260,3 +263,7 @@ Este proyecto usa un CRUD para administrar la información principal del negocio
 | `/ventas/ver` | Listado de ventas |
 | `/ventas/registrar` | Registrar nueva venta |
 | `/logout` | Cerrar sesión |
+
+
+## 6. Imágenes del negocio
+![Negocio](img/image.png)
