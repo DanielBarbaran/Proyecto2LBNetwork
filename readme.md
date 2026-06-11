@@ -183,31 +183,8 @@ CREATE TABLE venta (
 );
 ```
 
-### Datos de prueba
-
-```sql
-INSERT INTO usuario (nombre_usuario, clave, roles) VALUES
-('admin', 'admin', 'superadmin');
-
-INSERT INTO paquete (nombre_paquete, duracion, precio) VALUES
-('30Minutos', '30 minutos', 1.00),
-('1Hora', '1 hora', 2.00),
-('2Horas', '2 horas', 4.00),
-('3Dias', '3 dias', 9.00),
-('30Dias', '30 dias', 80.00);
-
-INSERT INTO cliente (nombre, documento, telefono) VALUES
-('Juan Perez', '12345678', '987654321'),
-('Maria Torres', '87654321', '912345678'),
-('Carlos Rojas', '45678912', '933221144');
-
-INSERT INTO venta (id_cliente, id_paquete, usuario_registro, codigo_cupon, estado) VALUES
-(1, 1, 1, 'DANIEL123', 'vendido'),
-(2, 2, 1, 'WIFI456', 'activo'),
-(3, 3, 1, 'LB789', 'vencido');
-```
-
----
+## 6. DiAGRAMA ENTIDAD
+![Negocio](img/diagrama.png)
 
 ## CRUD del Sistema
 
